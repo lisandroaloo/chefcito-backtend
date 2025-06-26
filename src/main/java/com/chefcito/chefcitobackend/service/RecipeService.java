@@ -1,0 +1,78 @@
+package com.chefcito.chefcitobackend.service;
+
+import com.chefcito.chefcitobackend.dto.RequestRecipeDto;
+import com.chefcito.chefcitobackend.dto.ResponseRecipeDto;
+import com.chefcito.chefcitobackend.exception.ResourceNotFoundException;
+import com.chefcito.chefcitobackend.model.Recipe;
+import com.chefcito.chefcitobackend.model.User;
+import com.chefcito.chefcitobackend.repository.IRecipeRepository;
+import com.chefcito.chefcitobackend.repository.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class RecipeService {
+
+  @Autowired
+  private IRecipeRepository recipeRepository;
+
+  @Autowired
+  private IUserRepository userRepository;
+
+  public ResponseRecipeDto addRecipe(RequestRecipeDto recipeDto) {
+    Recipe parsedRecipe = RequestRecipeDto.toRecipe(recipeDto);
+    
+    if (recipeDto.getRe_creator_us_id() != null) {
+      User user = userRepository.findById(recipeDto.getRe_creator_us_id())
+          .orElseThrow(() -> new ResourceNotFoundException("User", recipeDto.getRe_creator_us_id()));
+      parsedRecipe.setUser(user);
+    }
+    
+    Recipe responseRecipe = recipeRepository.save(parsedRecipe);
+    return ResponseRecipeDto.toResponseRecipeDto(responseRecipe);
+  }
+
+  public List<ResponseRecipeDto> getAllRecipes() {
+    List<Recipe> recipes = recipeRepository.findAll();
+    return recipes.stream()
+        .map(ResponseRecipeDto::toResponseRecipeDto)
+        .collect(Collectors.toList());
+  }
+
+  public ResponseRecipeDto getRecipeById(Long id) {
+    Recipe recipe = recipeRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Recipe", id));
+    return ResponseRecipeDto.toResponseRecipeDto(recipe);
+  }
+
+  public ResponseRecipeDto updateRecipe(Long id, RequestRecipeDto recipeDto) {
+    Recipe existingRecipe = recipeRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Recipe", id));
+    
+    existingRecipe.setRe_picture(recipeDto.getRe_picture());
+    existingRecipe.setRe_title(recipeDto.getRe_title());
+    existingRecipe.setRe_suitable_for_vegan(recipeDto.getRe_suitable_for_vegan());
+    existingRecipe.setRe_suitable_for_vegetarian(recipeDto.getRe_suitable_for_vegetarian());
+    existingRecipe.setRe_suitable_for_celiac(recipeDto.getRe_suitable_for_celiac());
+    existingRecipe.setRe_suitable_for_lactose_intolerant(recipeDto.getRe_suitable_for_lactose_intolerant());
+    
+    if (recipeDto.getRe_creator_us_id() != null) {
+      User user = userRepository.findById(recipeDto.getRe_creator_us_id())
+          .orElseThrow(() -> new ResourceNotFoundException("User", recipeDto.getRe_creator_us_id()));
+      existingRecipe.setUser(user);
+    }
+    
+    Recipe updatedRecipe = recipeRepository.save(existingRecipe);
+    return ResponseRecipeDto.toResponseRecipeDto(updatedRecipe);
+  }
+
+  public void deleteRecipe(Long id) {
+    if (!recipeRepository.existsById(id)) {
+      throw new ResourceNotFoundException("Recipe", id);
+    }
+    recipeRepository.deleteById(id);
+  }
+}

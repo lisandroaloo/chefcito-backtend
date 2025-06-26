@@ -1,0 +1,572 @@
+{
+	"info": {
+		"_postman_id": "chefcito-api-collection",
+		"name": "Chefcito API - CRUD Operations",
+		"description": "Complete collection of CRUD operations for all entities in Chefcito Backend API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ingredients",
+			"item": [
+				{
+					"name": "Create Ingredient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"in_name\": \"Tomato\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ingredient",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Ingredients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ingredient",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Ingredient by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ingredient/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Ingredient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"in_name\": \"Cherry Tomato\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ingredient/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Ingredient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ingredient/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"us_alias\": \"chef_mario\",\n    \"us_email\": \"mario@chefcito.com\",\n    \"us_password\": \"securePassword123\",\n    \"us_password_salt\": \"randomSalt456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"us_alias\": \"chef_mario_updated\",\n    \"us_email\": \"mario.updated@chefcito.com\",\n    \"us_password\": \"newSecurePassword123\",\n    \"us_password_salt\": \"newRandomSalt456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Recipes",
+			"item": [
+				{
+					"name": "Create Recipe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"re_creator_us_id\": 1,\n    \"re_picture\": \"https://example.com/pasta-image.jpg\",\n    \"re_title\": \"Classic Spaghetti Carbonara\",\n    \"re_suitable_for_vegan\": false,\n    \"re_suitable_for_vegetarian\": true,\n    \"re_suitable_for_celiac\": false,\n    \"re_suitable_for_lactose_intolerant\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/recipe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recipe"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Recipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recipe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recipe"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Recipe by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recipe/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recipe",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Recipe",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"re_creator_us_id\": 1,\n    \"re_picture\": \"https://example.com/updated-pasta-image.jpg\",\n    \"re_title\": \"Deluxe Spaghetti Carbonara with Truffle\",\n    \"re_suitable_for_vegan\": false,\n    \"re_suitable_for_vegetarian\": true,\n    \"re_suitable_for_celiac\": false,\n    \"re_suitable_for_lactose_intolerant\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/recipe/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recipe",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Recipe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recipe/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recipe",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Ingredient X Recipe",
+			"item": [
+				{
+					"name": "Create Ingredient X Recipe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ixr_in_id\": 1,\n    \"ixr_re_id\": 1,\n    \"quantity\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ingredient-x-recipe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient-x-recipe"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Ingredient X Recipe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ingredient-x-recipe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient-x-recipe"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Ingredient X Recipe by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ingredient-x-recipe/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient-x-recipe",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Ingredient X Recipe",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ixr_in_id\": 1,\n    \"ixr_re_id\": 1,\n    \"quantity\": 3\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ingredient-x-recipe/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient-x-recipe",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Ingredient X Recipe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ingredient-x-recipe/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ingredient-x-recipe",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Pending Recipe X User",
+			"item": [
+				{
+					"name": "Create Pending Recipe X User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rxu_us_id\": 1,\n    \"rxu_re_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pending-recipe-x-user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pending-recipe-x-user"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Pending Recipe X User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/pending-recipe-x-user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pending-recipe-x-user"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Pending Recipe X User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/pending-recipe-x-user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pending-recipe-x-user",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Pending Recipe X User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rxu_us_id\": 2,\n    \"rxu_re_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pending-recipe-x-user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pending-recipe-x-user",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Pending Recipe X User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/pending-recipe-x-user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pending-recipe-x-user",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+} 
