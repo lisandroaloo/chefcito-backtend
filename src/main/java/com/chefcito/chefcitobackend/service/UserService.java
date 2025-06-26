@@ -19,10 +19,9 @@ public class UserService {
   private IUserRepository userRepository;
 
   public ResponseUserDto login(LoginDto loginDto) {
-    User user = userRepository.findByUs_alias(loginDto.getUsername());
-    if (user.getUs_password() == loginDto.getPassword()) {
+    User user = userRepository.findByUsernameee(loginDto.getUsername());
+    if (user.getUs_password().equals(loginDto.getPassword())) {
         return ResponseUserDto.toResponseUserDto(user);
-
     }
     return null;
   }
@@ -51,7 +50,7 @@ public class UserService {
     User existingUser = userRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("User", id));
     
-    existingUser.setUs_alias(userDto.getUs_alias());
+    existingUser.setUsAlias(userDto.getUs_alias());
     existingUser.setUs_email(userDto.getUs_email());
     existingUser.setUs_password(userDto.getUs_password());
     existingUser.setUs_password_salt(userDto.getUs_password_salt());

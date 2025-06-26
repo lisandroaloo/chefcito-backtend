@@ -20,7 +20,7 @@ public class ResponseUserDto {
   public static User toUser(ResponseUserDto responseUserDto) {
     return User.builder()
         .us_id(responseUserDto.getUs_id())
-        .us_alias(responseUserDto.getUs_alias())
+        .usAlias(responseUserDto.getUs_alias())
         .us_email(responseUserDto.getUs_email())
         .us_password(responseUserDto.getUs_password())
         .us_password_salt(responseUserDto.getUs_password_salt())
@@ -30,7 +30,7 @@ public class ResponseUserDto {
   public static ResponseUserDto toResponseUserDto(User user) {
     return ResponseUserDto.builder()
         .us_id(user.getUs_id())
-        .us_alias(user.getUs_alias())
+        .us_alias(user.getUsAlias())
         .us_email(user.getUs_email())
         .us_password(user.getUs_password())
         .us_password_salt(user.getUs_password_salt())

@@ -1,6 +1,7 @@
 package com.chefcito.chefcitobackend.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,8 @@ public class User {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long us_id;
 
-  private String us_alias;
+  @Column(name = "us_alias")
+  private String usAlias;
   private String us_email;
   private String us_password;
   private String us_password_salt;

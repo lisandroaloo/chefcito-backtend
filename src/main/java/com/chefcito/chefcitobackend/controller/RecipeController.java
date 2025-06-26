@@ -1,5 +1,6 @@
 package com.chefcito.chefcitobackend.controller;
 
+import com.chefcito.chefcitobackend.dto.RequestFiltersDto;
 import com.chefcito.chefcitobackend.dto.RequestRecipeDto;
 import com.chefcito.chefcitobackend.dto.ResponseRecipeDto;
 import com.chefcito.chefcitobackend.service.RecipeService;
@@ -30,6 +31,11 @@ public class RecipeController {
   @GetMapping("/{id}")
   public ResponseEntity<ResponseRecipeDto> getRecipeById(@PathVariable Long id) {
     return new ResponseEntity<>(recipeService.getRecipeById(id), HttpStatus.OK);
+  }
+
+  @GetMapping("/filter")
+  public ResponseEntity<ResponseRecipeDto> getRecipeBy(@RequestBody RequestFiltersDto filters) {
+    return new ResponseEntity<>(recipeService.getRecipeBy(filters), HttpStatus.OK);
   }
 
   @PutMapping("/{id}")

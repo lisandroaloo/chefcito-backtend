@@ -1,5 +1,6 @@
 package com.chefcito.chefcitobackend.service;
 
+import com.chefcito.chefcitobackend.dto.RequestFiltersDto;
 import com.chefcito.chefcitobackend.dto.RequestRecipeDto;
 import com.chefcito.chefcitobackend.dto.ResponseRecipeDto;
 import com.chefcito.chefcitobackend.exception.ResourceNotFoundException;
@@ -46,6 +47,13 @@ public class RecipeService {
     Recipe recipe = recipeRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Recipe", id));
     return ResponseRecipeDto.toResponseRecipeDto(recipe);
+  }
+  
+
+  //TO DOOOOOO
+  public ResponseRecipeDto getRecipeBy(RequestFiltersDto filters) {
+  
+    return ResponseRecipeDto.toResponseRecipeDto(null);
   }
 
   public ResponseRecipeDto updateRecipe(Long id, RequestRecipeDto recipeDto) {
