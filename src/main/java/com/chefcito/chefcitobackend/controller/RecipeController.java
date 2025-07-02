@@ -1,6 +1,7 @@
 package com.chefcito.chefcitobackend.controller;
 
 import com.chefcito.chefcitobackend.dto.RequestFiltersDto;
+import com.chefcito.chefcitobackend.dto.RequestRecipeByUserDto;
 import com.chefcito.chefcitobackend.dto.RequestRecipeDto;
 import com.chefcito.chefcitobackend.dto.ResponseRecipeDto;
 import com.chefcito.chefcitobackend.service.RecipeService;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+ 
 import java.util.List;
 
 @RestController
@@ -33,9 +34,9 @@ public class RecipeController {
     return new ResponseEntity<>(recipeService.getRecipeById(id), HttpStatus.OK);
   }
 
-  @GetMapping("/filter")
-  public ResponseEntity<ResponseRecipeDto> getRecipeBy(@RequestBody RequestFiltersDto filters) {
-    return new ResponseEntity<>(recipeService.getRecipeBy(filters), HttpStatus.OK);
+  @PostMapping("/user")
+  public ResponseEntity<List<ResponseRecipeDto>> getRecipeByUserId(@RequestBody RequestRecipeByUserDto userDto) {
+    return new ResponseEntity<>(recipeService.getRecipeByUserId(userDto), HttpStatus.OK);
   }
 
   @PutMapping("/{id}")
