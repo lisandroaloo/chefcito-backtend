@@ -93,9 +93,22 @@ public class RecipeService {
           .orElseThrow(() -> new ResourceNotFoundException("User", recipeDto.getRe_creator_us_id()));
       existingRecipe.setUser(user);
     }
-    
-    Recipe updatedRecipe = recipeRepository.save(existingRecipe);
-    return ResponseRecipeDto.toResponseRecipeDto(updatedRecipe);
+
+    System.out.println(existingRecipe.getRe_title());
+    Recipe responseRecipe = recipeRepository.save(existingRecipe);
+
+    //Guardar pasos
+    stepXRecipeRepository.deleteAllByRecipe(responseRecipe);
+    responseRecipe.getSteps().clear();
+    responseRecipe.getSteps().addAll(recipeDto.getSteps().stream().map(s -> stepXRecipeRepository.save(new StepXRecipe(null, s, responseRecipe))).toList());
+
+    //Guardar ingredients
+    List<Ingredient> ingredients = recipeDto.getIngredients().stream().map(i -> ingredientRepository.save(new Ingredient(null, i, null))).toList();
+    ingredientXRecipeRepository.deleteAllByRecipe(responseRecipe);
+    responseRecipe.getIngredients().clear();
+    responseRecipe.getIngredients().addAll(ingredients.stream().map(i -> ingredientXRecipeRepository.save(new IngredientXRecipe(null, i, responseRecipe, 1))).toList());
+
+    return ResponseRecipeDto.toResponseRecipeDto(responseRecipe);
   }
 
   public void deleteRecipe(Long id) {
