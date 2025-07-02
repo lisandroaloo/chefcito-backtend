@@ -18,11 +18,11 @@ public class IngredientXRecipe {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long ixr_id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "ixr_in_id")
   private Ingredient ingredient;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "ixr_re_id")
   private Recipe recipe;
 

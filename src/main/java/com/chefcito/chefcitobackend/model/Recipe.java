@@ -25,7 +25,7 @@ public class Recipe {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long re_id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "re_creator_us_id")
   private User user;
 
@@ -36,9 +36,15 @@ public class Recipe {
   private Boolean re_suitable_for_celiac;
   private Boolean re_suitable_for_lactose_intolerant;
 
-  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<IngredientXRecipe> ingredients;
 
-  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  private List<StepXRecipe> steps;
+
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<PendingRecipeXUser> pendingUsers;
+
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  private List<ReviewXUserXRecipe> reviews;
 }

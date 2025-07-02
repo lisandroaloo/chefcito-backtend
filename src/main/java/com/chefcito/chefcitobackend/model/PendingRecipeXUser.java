@@ -18,11 +18,11 @@ public class PendingRecipeXUser {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long rxu_id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "rxu_us_id")
   private User user;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "rxu_re_id")
   private Recipe recipe;
 }

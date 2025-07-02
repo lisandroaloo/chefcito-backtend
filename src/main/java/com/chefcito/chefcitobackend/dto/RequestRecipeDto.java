@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +36,12 @@ public class RequestRecipeDto {
   @JsonProperty("lactose")
   private Boolean re_suitable_for_lactose_intolerant;
 
+  @JsonProperty("ingredients")
+  private List<String> ingredients;
+
+  @JsonProperty("steps")
+  private List<String> steps;
+
   public static Recipe toRecipe(RequestRecipeDto dto) {
     return new Recipe(
       null, // id
@@ -45,7 +53,9 @@ public class RequestRecipeDto {
       dto.getRe_suitable_for_celiac(),
       dto.getRe_suitable_for_lactose_intolerant(),
       null, // ingredientes
-      null  // pasos
+      null,  // pasos
+      null,
+            null
     );
   }
 }

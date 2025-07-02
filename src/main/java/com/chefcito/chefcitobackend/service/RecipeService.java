@@ -4,10 +4,8 @@ import com.chefcito.chefcitobackend.dto.RequestFiltersDto;
 import com.chefcito.chefcitobackend.dto.RequestRecipeDto;
 import com.chefcito.chefcitobackend.dto.ResponseRecipeDto;
 import com.chefcito.chefcitobackend.exception.ResourceNotFoundException;
-import com.chefcito.chefcitobackend.model.Recipe;
-import com.chefcito.chefcitobackend.model.User;
-import com.chefcito.chefcitobackend.repository.IRecipeRepository;
-import com.chefcito.chefcitobackend.repository.IUserRepository;
+import com.chefcito.chefcitobackend.model.*;
+import com.chefcito.chefcitobackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,15 @@ public class RecipeService {
   private IRecipeRepository recipeRepository;
 
   @Autowired
+  private IStepXRecipe stepXRecipeRepository;
+
+  @Autowired
+  private IIngredientRepository ingredientRepository;
+
+  @Autowired
+  private IIngredientXRecipeRepository ingredientXRecipeRepository;
+
+  @Autowired
   private IUserRepository userRepository;
 
   public ResponseRecipeDto addRecipe(RequestRecipeDto recipeDto) {
@@ -31,8 +38,16 @@ public class RecipeService {
           .orElseThrow(() -> new ResourceNotFoundException("User", recipeDto.getRe_creator_us_id()));
       parsedRecipe.setUser(user);
     }
-    
     Recipe responseRecipe = recipeRepository.save(parsedRecipe);
+
+    //Guardar pasos
+    responseRecipe.setSteps(recipeDto.getSteps().stream().map(s -> stepXRecipeRepository.save(new StepXRecipe(null, s, responseRecipe))).toList());
+
+    //Guardar ingredients
+    List<Ingredient> ingredients = recipeDto.getIngredients().stream().map(i -> ingredientRepository.save(new Ingredient(null, i, null))).toList();
+
+    responseRecipe.setIngredients(ingredients.stream().map(i -> ingredientXRecipeRepository.save(new IngredientXRecipe(null, i, responseRecipe, 1))).toList());
+
     return ResponseRecipeDto.toResponseRecipeDto(responseRecipe);
   }
 

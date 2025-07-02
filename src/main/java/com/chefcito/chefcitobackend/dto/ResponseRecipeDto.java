@@ -1,10 +1,15 @@
 package com.chefcito.chefcitobackend.dto;
 
+import com.chefcito.chefcitobackend.model.Ingredient;
+import com.chefcito.chefcitobackend.model.IngredientXRecipe;
 import com.chefcito.chefcitobackend.model.Recipe;
+import com.chefcito.chefcitobackend.model.StepXRecipe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +24,9 @@ public class ResponseRecipeDto {
   private Boolean re_suitable_for_vegetarian;
   private Boolean re_suitable_for_celiac;
   private Boolean re_suitable_for_lactose_intolerant;
+  private Float re_review;
+  private List<String> steps;
+  private List<String> ingredients;
 
   public static Recipe toRecipe(ResponseRecipeDto responseRecipeDto) {
     return Recipe.builder()
@@ -29,6 +37,8 @@ public class ResponseRecipeDto {
         .re_suitable_for_vegetarian(responseRecipeDto.getRe_suitable_for_vegetarian())
         .re_suitable_for_celiac(responseRecipeDto.getRe_suitable_for_celiac())
         .re_suitable_for_lactose_intolerant(responseRecipeDto.getRe_suitable_for_lactose_intolerant())
+        .steps(null)
+        .ingredients(null)
         .build();
   }
 
@@ -42,6 +52,8 @@ public class ResponseRecipeDto {
         .re_suitable_for_vegetarian(recipe.getRe_suitable_for_vegetarian())
         .re_suitable_for_celiac(recipe.getRe_suitable_for_celiac())
         .re_suitable_for_lactose_intolerant(recipe.getRe_suitable_for_lactose_intolerant())
+        .steps(recipe.getSteps().stream().map(StepXRecipe::getSxr_description).toList())
+        .ingredients(recipe.getIngredients().stream().map(ixr -> ixr.getIngredient().getIn_name()).toList())
         .build();
   }
 } 
