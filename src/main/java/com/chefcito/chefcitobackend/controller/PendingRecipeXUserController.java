@@ -18,8 +18,10 @@ public class PendingRecipeXUserController {
   private PendingRecipeXUserService pendingRecipeXUserService;
 
   @PostMapping
-  public ResponseEntity<ResponsePendingRecipeXUserDto> addPendingRecipeXUser(@RequestBody RequestPendingRecipeXUserDto pendingRecipeXUser) {
-    return new ResponseEntity<>(pendingRecipeXUserService.addPendingRecipeXUser(pendingRecipeXUser), HttpStatus.CREATED);
+  public ResponseEntity<ResponsePendingRecipeXUserDto> addPendingRecipeXUser(
+      @RequestBody RequestPendingRecipeXUserDto pendingRecipeXUser) {
+    return new ResponseEntity<>(pendingRecipeXUserService.addPendingRecipeXUser(pendingRecipeXUser),
+        HttpStatus.CREATED);
   }
 
   @GetMapping
@@ -32,9 +34,22 @@ public class PendingRecipeXUserController {
     return new ResponseEntity<>(pendingRecipeXUserService.getPendingRecipeXUserById(id), HttpStatus.OK);
   }
 
+  @GetMapping("/user/{id}/recipe/{re_id}")
+  public ResponseEntity<ResponsePendingRecipeXUserDto> getPendingRecipeXUserByUserAndRecipeId(@PathVariable Long id, @PathVariable Long re_id) {
+    return new ResponseEntity<>(pendingRecipeXUserService.getPendingRecipeXUserByUserAndRecipeId(id,re_id), HttpStatus.OK);
+  }
+
+  
+  @GetMapping("/user/{id}")
+  public ResponseEntity<List<ResponsePendingRecipeXUserDto>> getPendingRecipeXUserByUserId(@PathVariable Long id) {
+    return new ResponseEntity<>(pendingRecipeXUserService.getPendingRecipeXUserByUserId(id), HttpStatus.OK);
+  }
+
   @PutMapping("/{id}")
-  public ResponseEntity<ResponsePendingRecipeXUserDto> updatePendingRecipeXUser(@PathVariable Long id, @RequestBody RequestPendingRecipeXUserDto pendingRecipeXUser) {
-    return new ResponseEntity<>(pendingRecipeXUserService.updatePendingRecipeXUser(id, pendingRecipeXUser), HttpStatus.OK);
+  public ResponseEntity<ResponsePendingRecipeXUserDto> updatePendingRecipeXUser(@PathVariable Long id,
+      @RequestBody RequestPendingRecipeXUserDto pendingRecipeXUser) {
+    return new ResponseEntity<>(pendingRecipeXUserService.updatePendingRecipeXUser(id, pendingRecipeXUser),
+        HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
