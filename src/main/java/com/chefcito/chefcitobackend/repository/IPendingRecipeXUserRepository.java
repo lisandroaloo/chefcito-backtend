@@ -5,6 +5,7 @@ import com.chefcito.chefcitobackend.model.PendingRecipeXUser;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,4 +16,9 @@ public interface IPendingRecipeXUserRepository extends JpaRepository<PendingReci
 
     @Query("SELECT prxu FROM PendingRecipeXUser prxu WHERE prxu.user.id = :id")
     List<PendingRecipeXUser> findByUserId(@Param("id") Long id);
+
+    @Modifying
+    @Query("DELETE FROM PendingRecipeXUser prxu WHERE prxu.rxu_id = :id")
+    void deleteByIdCustom(@Param("id") Long id);
+
 }

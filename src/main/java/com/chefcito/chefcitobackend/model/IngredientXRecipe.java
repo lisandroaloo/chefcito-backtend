@@ -19,12 +19,8 @@ public class IngredientXRecipe {
   private Long ixr_id;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "ixr_in_id")
-  private Ingredient ingredient;
-
-  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "ixr_re_id")
   private Recipe recipe;
 
-  private Integer quantity;
+  private String name;
 }

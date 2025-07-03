@@ -1,6 +1,5 @@
 package com.chefcito.chefcitobackend.dto;
 
-import com.chefcito.chefcitobackend.model.Ingredient;
 import com.chefcito.chefcitobackend.model.IngredientXRecipe;
 import com.chefcito.chefcitobackend.model.Recipe;
 import com.chefcito.chefcitobackend.model.StepXRecipe;
@@ -53,7 +52,7 @@ public class ResponseRecipeDto {
         .re_suitable_for_celiac(recipe.getRe_suitable_for_celiac())
         .re_suitable_for_lactose_intolerant(recipe.getRe_suitable_for_lactose_intolerant())
         .steps(recipe.getSteps().stream().map(StepXRecipe::getSxr_description).toList())
-        .ingredients(recipe.getIngredients().stream().map(ixr -> ixr.getIngredient().getIn_name()).toList())
+        .ingredients(recipe.getIngredients().stream().map(IngredientXRecipe::getName).toList())
         .build();
   }
 } 

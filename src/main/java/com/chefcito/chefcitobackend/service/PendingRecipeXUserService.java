@@ -9,6 +9,7 @@ import com.chefcito.chefcitobackend.model.User;
 import com.chefcito.chefcitobackend.repository.IPendingRecipeXUserRepository;
 import com.chefcito.chefcitobackend.repository.IRecipeRepository;
 import com.chefcito.chefcitobackend.repository.IUserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,10 +99,17 @@ public class PendingRecipeXUserService {
     return ResponsePendingRecipeXUserDto.toResponsePendingRecipeXUserDto(updatedPendingRecipeXUser);
   }
 
+  @Transactional
   public void deletePendingRecipeXUser(Long id) {
-    if (!pendingRecipeXUserRepository.existsById(id)) {
-      throw new ResourceNotFoundException("PendingRecipeXUser", id);
+    try {
+      if (!pendingRecipeXUserRepository.existsById(id)) {
+        throw new ResourceNotFoundException("PendingRecipeXUser", id);
+      }
+      pendingRecipeXUserRepository.deleteByIdCustom(id);
+      System.out.println("Deleted successfully: " + id);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    pendingRecipeXUserRepository.deleteById(id);
   }
+
 }

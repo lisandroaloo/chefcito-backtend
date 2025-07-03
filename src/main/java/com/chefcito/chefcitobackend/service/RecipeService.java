@@ -23,9 +23,6 @@ public class RecipeService {
   private IStepXRecipe stepXRecipeRepository;
 
   @Autowired
-  private IIngredientRepository ingredientRepository;
-
-  @Autowired
   private IIngredientXRecipeRepository ingredientXRecipeRepository;
 
   @Autowired
@@ -45,9 +42,7 @@ public class RecipeService {
     responseRecipe.setSteps(recipeDto.getSteps().stream().map(s -> stepXRecipeRepository.save(new StepXRecipe(null, s, responseRecipe))).toList());
 
     //Guardar ingredients
-    List<Ingredient> ingredients = recipeDto.getIngredients().stream().map(i -> ingredientRepository.save(new Ingredient(null, i, null))).toList();
-
-    responseRecipe.setIngredients(ingredients.stream().map(i -> ingredientXRecipeRepository.save(new IngredientXRecipe(null, i, responseRecipe, 1))).toList());
+    responseRecipe.setIngredients(recipeDto.getIngredients().stream().map(i -> ingredientXRecipeRepository.save(new IngredientXRecipe(null, responseRecipe, i))).toList());
 
     return ResponseRecipeDto.toResponseRecipeDto(responseRecipe);
   }
@@ -80,7 +75,9 @@ public class RecipeService {
   public ResponseRecipeDto updateRecipe(Long id, RequestRecipeDto recipeDto) {
     Recipe existingRecipe = recipeRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Recipe", id));
-    
+
+
+
     existingRecipe.setRe_picture(recipeDto.getRe_picture());
     existingRecipe.setRe_title(recipeDto.getRe_title());
     existingRecipe.setRe_suitable_for_vegan(recipeDto.getRe_suitable_for_vegan());
@@ -103,10 +100,9 @@ public class RecipeService {
     responseRecipe.getSteps().addAll(recipeDto.getSteps().stream().map(s -> stepXRecipeRepository.save(new StepXRecipe(null, s, responseRecipe))).toList());
 
     //Guardar ingredients
-    List<Ingredient> ingredients = recipeDto.getIngredients().stream().map(i -> ingredientRepository.save(new Ingredient(null, i, null))).toList();
     ingredientXRecipeRepository.deleteAllByRecipe(responseRecipe);
     responseRecipe.getIngredients().clear();
-    responseRecipe.getIngredients().addAll(ingredients.stream().map(i -> ingredientXRecipeRepository.save(new IngredientXRecipe(null, i, responseRecipe, 1))).toList());
+    responseRecipe.getIngredients().addAll(recipeDto.getIngredients().stream().map(i -> ingredientXRecipeRepository.save(new IngredientXRecipe(null, responseRecipe, i))).toList());
 
     return ResponseRecipeDto.toResponseRecipeDto(responseRecipe);
   }
