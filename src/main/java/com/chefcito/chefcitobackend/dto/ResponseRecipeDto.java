@@ -1,5 +1,6 @@
 package com.chefcito.chefcitobackend.dto;
 
+import com.chefcito.chefcitobackend.dto.RequestRecipeDto.ingredientsClass;
 import com.chefcito.chefcitobackend.model.IngredientXRecipe;
 import com.chefcito.chefcitobackend.model.Recipe;
 import com.chefcito.chefcitobackend.model.StepXRecipe;
@@ -25,7 +26,7 @@ public class ResponseRecipeDto {
   private Boolean re_suitable_for_lactose_intolerant;
   private Float re_review;
   private List<String> steps;
-  private List<String> ingredients;
+  private List<ingredientsClass> ingredients;
 
   public static Recipe toRecipe(ResponseRecipeDto responseRecipeDto) {
     return Recipe.builder()
@@ -52,7 +53,10 @@ public class ResponseRecipeDto {
         .re_suitable_for_celiac(recipe.getRe_suitable_for_celiac())
         .re_suitable_for_lactose_intolerant(recipe.getRe_suitable_for_lactose_intolerant())
         .steps(recipe.getSteps().stream().map(StepXRecipe::getSxr_description).toList())
-        .ingredients(recipe.getIngredients().stream().map(IngredientXRecipe::getName).toList())
+        .ingredients(
+            recipe.getIngredients().stream()
+                .map(i -> new ingredientsClass(i.getName(), i.getQuantity(), i.getUnit()))
+                .toList())
         .build();
   }
-} 
+}

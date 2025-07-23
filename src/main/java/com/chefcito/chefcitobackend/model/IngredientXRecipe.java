@@ -23,4 +23,6 @@ public class IngredientXRecipe {
   private Recipe recipe;
 
   private String name;
+  private String quantity;
+  private String unit;
 }

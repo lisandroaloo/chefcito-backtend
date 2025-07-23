@@ -27,4 +27,6 @@ public class ReviewXUserXRecipe {
     private Recipe recipe;
 
     private Integer stars;
+
+    private String review;
 }
