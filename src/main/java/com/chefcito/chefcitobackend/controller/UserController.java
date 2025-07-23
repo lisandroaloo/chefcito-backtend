@@ -1,5 +1,6 @@
 package com.chefcito.chefcitobackend.controller;
 
+import com.chefcito.chefcitobackend.dto.EmailRequestDto;
 import com.chefcito.chefcitobackend.dto.LoginDto;
 import com.chefcito.chefcitobackend.dto.RequestUserDto;
 import com.chefcito.chefcitobackend.dto.ResponseUserDto;
@@ -22,6 +23,12 @@ public class UserController {
   public ResponseEntity<ResponseUserDto> login(@RequestBody LoginDto loginDto) {
     return new ResponseEntity<>(userService.login(loginDto), HttpStatus.OK);
   }
+
+   @PostMapping("/recover-password")
+  public ResponseEntity<?> recover(@RequestBody EmailRequestDto dto) {
+    return new ResponseEntity<>(userService.recoverPassword(dto.getEmail()), HttpStatus.OK);
+  }
+
 
   @PostMapping
   public ResponseEntity<ResponseUserDto> addUser(@RequestBody RequestUserDto user) {

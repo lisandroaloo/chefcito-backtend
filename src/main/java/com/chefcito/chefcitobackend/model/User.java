@@ -23,6 +23,7 @@ public class User {
   private String us_email;
   private String us_password;
   private String us_password_salt;
+  private String us_recovery_code;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<Recipe> recipes;

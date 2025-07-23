@@ -18,6 +18,6 @@ public class RequestUserDto {
 
   public static User toUser(RequestUserDto requestUserDto) {
     return new User(null, requestUserDto.getUs_alias(), requestUserDto.getUs_email(), 
-        requestUserDto.getUs_password(), requestUserDto.getUs_password_salt(), null, null, null);
+        requestUserDto.getUs_password(), requestUserDto.getUs_password_salt(),null, null, null, null);
   }
 } 
