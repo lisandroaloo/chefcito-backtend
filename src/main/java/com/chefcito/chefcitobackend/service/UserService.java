@@ -1,6 +1,7 @@
 package com.chefcito.chefcitobackend.service;
 
 import com.chefcito.chefcitobackend.dto.LoginDto;
+import com.chefcito.chefcitobackend.dto.RecoverPasswordDto;
 import com.chefcito.chefcitobackend.dto.RequestUserDto;
 import com.chefcito.chefcitobackend.dto.ResponseUserDto;
 import com.chefcito.chefcitobackend.exception.ResourceNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.http.HttpClient;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +39,7 @@ public class UserService {
     if (user == null) {
       return ResponseEntity.ok().build();
     }
-    
+
     String recoveryCode = String.valueOf((int) (Math.random() * 900000) + 100000); // ejemplo: 6 dígitos
 
     // 2. Guardarlo en el usuario o en algún lugar (opcional)
@@ -48,6 +50,23 @@ public class UserService {
     emailService.sendRecoveryEmail(email, recoveryCode);
 
     return ResponseEntity.ok().build();
+
+  }
+
+  public ResponseEntity<?> checkPassword(RecoverPasswordDto dto) {
+    User user = userRepository.findByEmail(dto.getEmail());
+
+    String recoveryCode = user.getUs_recovery_code();
+
+    if (recoveryCode.equals(dto.getCode())) {
+      user.setUs_password(dto.getPassword());
+      userRepository.save(user); // si lo guardás en el modelo
+
+      return ResponseEntity.ok().build();
+
+    }
+
+    return ResponseEntity.badRequest().build();
 
   }
 
